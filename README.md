@@ -164,15 +164,32 @@ For detailed API documentation, refer to the Swagger documentation at http://lo
 
 ### 9\. How to Run the Project
 
-1.  `https://github.com/3bd-dev/message-service && cd message-service`
+1.  Clone the repository and navigate to the project directory: 
+    ```bash 
+    git clone https://github.com/3bd-dev/message-service && cd message-service
     
-2.  `docker-compose up --build ` The message service will be available at http://localhost:8080/api/v1.
-    
+2.  Start the service using Docker Compose: 
+    ```bash 
+    docker-compose up --build
+    ```
+     The message service will be available at http://localhost:8080/api/v1.
+
 3.  **API Documentation**:
     
     *   Access the OpenAPI (Swagger) documentation at http://localhost:8080/swagger.
         
     *   Postman collection is available in `message.postman_collection.json`.
+4.  **Test Users**:
+
+    *   Use the following test users for testing (please check the users table to get the ids) :
+        * **Maker**: 
+            * ID: `550e8400-e29b-41d4-a716-446655440000`, Username: `maker1`, Role: `maker`
+        * **Checkers**:
+            * ID: `550e8400-e29b-41d4-a716-446655440001`, Username: `checker1`, Role: `checker`
+            * ID: `550e8400-e29b-41d4-a716-446655440002`, Username: `checker2`, Role: `checker`
+            
+    Note: Please check the users table in the database to check users data.
+        
         
 
 ### 10\. Technologies Used
