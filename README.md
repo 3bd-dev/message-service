@@ -5,9 +5,11 @@
 
 The **Message Service** is a microservice that manages the creation, approval, and rejection of messages through a **maker-checker** workflow. It allows makers to create messages and checkers to approve or reject them. A message is sent to the recipient only if it receives the required number of approvals. If any checker rejects the message, it is not sent.
 
+**Development Time**: Approximately 8 hours.
+
 Key capabilities include:
 - **Message Creation**: Makers can create messages with content and recipient details.
-- **Approval Workflow**: Checkers can approve or reject messages. A message status will changed to approved only if it meets the required number of approvals.
+- **Approval Workflow**: Checkers can approve or reject messages. A message is approved only if it meets the required number of approvals.
 - **Rejection Handling**: If any checker rejects the message, it is immediately marked as rejected.
 - **Extensible Architecture**: The service is designed to be easily extended with additional features such as dynamic approval requirements or event-driven workflows.
 
