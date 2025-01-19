@@ -1,0 +1,218 @@
+consumes:
+    - application/json
+definitions:
+    Message:
+        properties:
+            approvals_required:
+                format: int64
+                type: integer
+                x-go-name: ApprovalsRequired
+            content:
+                type: string
+                x-go-name: Content
+            created_at:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            id:
+                format: uuid
+                type: string
+                x-go-name: ID
+            recipient:
+                type: string
+                x-go-name: Recipient
+            reviews:
+                items:
+                    $ref: '#/definitions/MessageReview'
+                type: array
+                x-go-name: Reviews
+            sender_id:
+                format: uuid
+                type: string
+                x-go-name: SenderID
+            status:
+                $ref: '#/definitions/MessageStatus'
+            updated_at:
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+        title: Message represents a message created by a sender.
+        type: object
+        x-go-package: github.com/3bd-dev/wallet-service/internal/models
+    MessageReview:
+        properties:
+            action:
+                $ref: '#/definitions/MessageReviewAction'
+            created_at:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            id:
+                format: uuid
+                type: string
+                x-go-name: ID
+            message_id:
+                format: uuid
+                type: string
+                x-go-name: MessageID
+            reviewer_id:
+                format: uuid
+                type: string
+                x-go-name: ReviewerID
+        title: MessageReview represents a review (approval or rejection) of a message by a checker.
+        type: object
+        x-go-package: github.com/3bd-dev/wallet-service/internal/models
+    MessageReviewAction:
+        title: MessageReviewAction represents the possible actions for a message review.
+        type: string
+        x-go-package: github.com/3bd-dev/wallet-service/internal/models
+    MessageStatus:
+        title: MessageStatus represents the possible statuses of a message.
+        type: string
+        x-go-package: github.com/3bd-dev/wallet-service/internal/models
+    NewMessage:
+        properties:
+            content:
+                type: string
+                x-go-name: Content
+            recipient:
+                type: string
+                x-go-name: Recipient
+            sender_id:
+                format: uuid
+                type: string
+                x-go-name: SenderID
+        type: object
+        x-go-package: github.com/3bd-dev/wallet-service/internal/services/message
+    NewMessageReview:
+        properties:
+            action:
+                $ref: '#/definitions/MessageReviewAction'
+            reviewer_id:
+                format: uuid
+                type: string
+                x-go-name: ReviewerID
+        type: object
+        x-go-package: github.com/3bd-dev/wallet-service/internal/services/message
+info:
+    description: |-
+        This is the documentation for the message API.
+
+        Common Responses:
+
+        200: OK
+        400: Bad Request
+        404: Not Found
+        501: Internal Server Error
+    title: message API Documentation
+    version: 1.0.0
+paths:
+    /api/v1/messages:
+        get:
+            operationId: ListMessages
+            parameters:
+                - description: SenderID is an optional query parameter to filter messages by sender.
+                  in: query
+                  name: sender_id
+                  type: string
+                  x-go-name: SenderID
+            responses:
+                "200":
+                    $ref: '#/responses/ListMessagesResponse'
+            summary: List all messages.
+            tags:
+                - Messages
+        post:
+            operationId: CreateMessage
+            parameters:
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/NewMessage'
+            responses:
+                "201":
+                    $ref: '#/responses/CreateMessageResponse'
+            summary: Create a new message.
+            tags:
+                - Messages
+    /api/v1/messages/{id}/reviews:
+        post:
+            operationId: ReviewMessage
+            parameters:
+                - description: ID of the message to review.
+                  example: 123e4567-e89b-12d3-a456-426614174000
+                  format: uuid
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: ID
+                - in: body
+                  name: Body
+                  schema:
+                    $ref: '#/definitions/NewMessageReview'
+            responses:
+                "200":
+                    $ref: '#/responses/ReviewMessageResponse'
+            summary: Create a new message review.
+            tags:
+                - Messages
+produces:
+    - application/json
+responses:
+    CreateMessageResponse:
+        description: ""
+        schema:
+            properties:
+                code:
+                    format: int64
+                    type: integer
+                    x-go-name: Code
+                data:
+                    $ref: '#/definitions/Message'
+                    x-go-name: Data
+                details:
+                    x-go-name: Details
+                message:
+                    type: string
+                    x-go-name: Message
+            type: object
+    ListMessagesResponse:
+        description: ""
+        schema:
+            properties:
+                code:
+                    format: int64
+                    type: integer
+                    x-go-name: Code
+                data:
+                    items:
+                        $ref: '#/definitions/Message'
+                    type: array
+                    x-go-name: Data
+                details:
+                    x-go-name: Details
+                message:
+                    type: string
+                    x-go-name: Message
+            type: object
+    ReviewMessageResponse:
+        description: ""
+        schema:
+            properties:
+                code:
+                    format: int64
+                    type: integer
+                    x-go-name: Code
+                data:
+                    $ref: '#/definitions/MessageReview'
+                    x-go-name: Data
+                details:
+                    x-go-name: Details
+                message:
+                    type: string
+                    x-go-name: Message
+            type: object
+schemes:
+    - http
+swagger: "2.0"

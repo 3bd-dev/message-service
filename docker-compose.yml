@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: message-db
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - message-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  api:
+    container_name: message-api
+    build:
+      context: .
+      dockerfile: docker/dockerfile.api
+      args:
+        BUILD_REF: latest
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - message-network
+    volumes:
+      - message_api_data:/service
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  dbmate:
+    container_name: dbmate-migrations
+    image: amacneil/dbmate:2.11.0
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - message-network
+    env_file:
+      - .env
+    volumes:
+      - message_api_data:/service
+    entrypoint: ["sh", "-c", "dbmate --wait --migrations-dir=${MIGRATIONS_DIR} up && dbmate --schema-file=${SEED_DIR} load"]
+    restart: on-failure
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  db_data:
+  message_api_data:
+  dbmate_migrations_data:
+
+networks:
+  message-network:

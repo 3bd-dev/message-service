@@ -1,0 +1,453 @@
+{
+	"info": {
+		"_postman_id": "d878a437-af95-4373-abe8-afe28fcb30fa",
+		"name": "message",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23591778"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"hello, from the other side\",\n    \"recipient\": \"abdalrahmansaadulla@gmail.com\",\n    \"sender_id\":\"d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/messages",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"messages"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - create",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"hello, from the other side\",\n    \"recipient\": \"abdalrahmansaadulla@gmail.com\",\n    \"sender_id\":\"d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 18:56:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "348"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n        \"content\": \"hello, from the other side\",\n        \"status\": \"pending\",\n        \"recipient\": \"abdalrahmansaadulla@gmail.com\",\n        \"sender_id\": \"d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54\",\n        \"approvals_required\": 2,\n        \"created_at\": \"2025-01-19T18:56:39.781721424Z\",\n        \"updated_at\": \"2025-01-19T18:56:39.781721507Z\",\n        \"reviews\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"action\": \"approved\",\n    \"reviewer_id\":\"25723410-5d6f-4076-8a32-2cd15c2762e4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/messages/2834c667-e253-4d0b-a719-066c7c988fa7/reviews",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"messages",
+						"2834c667-e253-4d0b-a719-066c7c988fa7",
+						"reviews"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "400 - review not pending message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"approved\",\n    \"reviewer_id\":\"25723410-5d6f-4076-8a32-2cd15c2762e4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages/2834c667-e253-4d0b-a719-066c7c988fa7/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages",
+								"2834c667-e253-4d0b-a719-066c7c988fa7",
+								"reviews"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 18:57:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "52"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"message\": \"message is already rejected\"\n}"
+				},
+				{
+					"name": "200 - approve message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"approved\",\n    \"reviewer_id\":\"25723410-5d6f-4076-8a32-2cd15c2762e4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages/2834c667-e253-4d0b-a719-066c7c988fa7/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages",
+								"2834c667-e253-4d0b-a719-066c7c988fa7",
+								"reviews"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 18:58:52 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "236"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"826388d8-f7af-4566-b2b3-a53f505d2fcc\",\n        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n        \"reviewer_id\": \"25723410-5d6f-4076-8a32-2cd15c2762e4\",\n        \"action\": \"approved\",\n        \"created_at\": \"2025-01-19T18:58:52.612393388Z\"\n    }\n}"
+				},
+				{
+					"name": "400 - review twice",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"approved\",\n    \"reviewer_id\":\"25723410-5d6f-4076-8a32-2cd15c2762e4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages/2834c667-e253-4d0b-a719-066c7c988fa7/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages",
+								"2834c667-e253-4d0b-a719-066c7c988fa7",
+								"reviews"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 18:59:24 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "100"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 400,\n    \"message\": \"user 25723410-5d6f-4076-8a32-2cd15c2762e4 has already reviewed this message\"\n}"
+				},
+				{
+					"name": "200 - reject message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"rejected\",\n    \"reviewer_id\":\"2011aa1f-8b4a-470d-b4a7-be3e44c34b98\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages/2834c667-e253-4d0b-a719-066c7c988fa7/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages",
+								"2834c667-e253-4d0b-a719-066c7c988fa7",
+								"reviews"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 19:00:30 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "236"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"id\": \"b7affe4a-4a73-4764-ba86-7fff338d783c\",\n        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n        \"reviewer_id\": \"2011aa1f-8b4a-470d-b4a7-be3e44c34b98\",\n        \"action\": \"rejected\",\n        \"created_at\": \"2025-01-19T19:00:30.868028878Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/messages?sender_id=65800e3d-d7c1-4765-941b-7399ff64f05f",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"messages"
+					],
+					"query": [
+						{
+							"key": "sender_id",
+							"value": "65800e3d-d7c1-4765-941b-7399ff64f05f"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - list",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 19:00:52 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "816"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"items\": [\n            {\n                \"id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                \"content\": \"hello, from the other side\",\n                \"status\": \"rejected\",\n                \"recipient\": \"abdalrahmansaadulla@gmail.com\",\n                \"sender_id\": \"d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54\",\n                \"approvals_required\": 2,\n                \"created_at\": \"2025-01-19T18:56:39.781721Z\",\n                \"updated_at\": \"2025-01-19T19:00:30.869258Z\",\n                \"reviews\": [\n                    {\n                        \"id\": \"826388d8-f7af-4566-b2b3-a53f505d2fcc\",\n                        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                        \"reviewer_id\": \"25723410-5d6f-4076-8a32-2cd15c2762e4\",\n                        \"action\": \"approved\",\n                        \"created_at\": \"2025-01-19T18:58:52.612393Z\"\n                    },\n                    {\n                        \"id\": \"b7affe4a-4a73-4764-ba86-7fff338d783c\",\n                        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                        \"reviewer_id\": \"2011aa1f-8b4a-470d-b4a7-be3e44c34b98\",\n                        \"action\": \"rejected\",\n                        \"created_at\": \"2025-01-19T19:00:30.868028Z\"\n                    }\n                ]\n            }\n        ],\n        \"total\": 1,\n        \"page\": 1,\n        \"rowsPerPage\": 10\n    }\n}"
+				},
+				{
+					"name": "200 - list with filter",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/messages?sender_id=d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "sender_id",
+									"value": "d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jan 2025 19:01:24 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "816"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"items\": [\n            {\n                \"id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                \"content\": \"hello, from the other side\",\n                \"status\": \"rejected\",\n                \"recipient\": \"abdalrahmansaadulla@gmail.com\",\n                \"sender_id\": \"d006aeb8-217e-4e74-9cb6-3eb5ae5c6f54\",\n                \"approvals_required\": 2,\n                \"created_at\": \"2025-01-19T18:56:39.781721Z\",\n                \"updated_at\": \"2025-01-19T19:00:30.869258Z\",\n                \"reviews\": [\n                    {\n                        \"id\": \"826388d8-f7af-4566-b2b3-a53f505d2fcc\",\n                        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                        \"reviewer_id\": \"25723410-5d6f-4076-8a32-2cd15c2762e4\",\n                        \"action\": \"approved\",\n                        \"created_at\": \"2025-01-19T18:58:52.612393Z\"\n                    },\n                    {\n                        \"id\": \"b7affe4a-4a73-4764-ba86-7fff338d783c\",\n                        \"message_id\": \"2834c667-e253-4d0b-a719-066c7c988fa7\",\n                        \"reviewer_id\": \"2011aa1f-8b4a-470d-b4a7-be3e44c34b98\",\n                        \"action\": \"rejected\",\n                        \"created_at\": \"2025-01-19T19:00:30.868028Z\"\n                    }\n                ]\n            }\n        ],\n        \"total\": 1,\n        \"page\": 1,\n        \"rowsPerPage\": 10\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}
